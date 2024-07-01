@@ -1,0 +1,148 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="col-12 col-md-8 col-lg-6">
+        <form [formGroup]="registrationForm" (submit)="saveForm()" class="p-4 border rounded bg-light">
+            <h2 class="mb-4 mt-2">Signup Form </h2>
+            <p style="color: brown;"> * (asterisk) represents mandatory field</p>
+
+            <div class="mb-3">
+                <label for="firstname" class="form-label">First Name:<span style="color: brown;">*</span></label>
+                <input type="text" id="firstname" maxlength="20" formControlName="firstname" class="form-control">
+                <!-- <div class="text-danger"
+                    *ngIf="registrationForm.controls.firstname.invalid && registrationForm.controls.firstname.touched">
+                    Firstname is
+                    required. </div> -->
+                <div
+                    *ngIf="getControl('firstname')?.errors && getControl('firstname')?.touched || getControl('firstname')?.dirty">
+                    <small class="text-danger" *ngIf="getControl('firstname')?.errors?.['required']">First name is
+                        required.</small>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="lastname" class="form-label">Last Name:<span style="color: brown;">*</span></label>
+                <input type="text" id="lastname" minlength="3" maxlength="20" formControlName="lastname"
+                    class="form-control">
+                <div *ngIf="getControl('lastname')?.errors && getControl('lastname')?.touched">
+                    <small class="text-danger" *ngIf="getControl('lastname')?.errors?.['required']">Last name is
+                        required.</small>
+                </div>
+
+
+
+                <!-- <div class="text-danger"
+                    *ngIf="registrationForm.controls.lastname.invalid && registrationForm.controls.lastname.touched">
+                    Name is
+                    required with atleast 3 characters. </div> -->
+            </div>
+
+            <div class="mb-3"> <label for="email" class="form-label">Email:<span
+                        style="color: brown;">*</span></label><br>
+                <input type="email" id="email" formControlName="email" class="form-control">
+                <div *ngIf="getControl('email')?.errors && getControl('email')?.touched">
+                    <small class="text-danger" *ngIf="getControl('email')?.errors?.['required']">Email is
+                        required</small>
+                    <small class="text-danger" *ngIf="getControl('email')?.errors?.['email']">Invalid Email</small>
+                </div>
+            </div>
+            <!-- <div *ngIf="registrationForm.controls.email.touched && registrationForm.controls.email.invalid"
+                    class="text-danger"> Please enter a valid email. </div>
+            </div> -->
+
+
+            <!-- <div class="mb-3">
+                <label for="phoneNumber" class="form-label">Phone number:<span style="color: brown;">*</span></label>
+                <input type="tel" inputmode="numeric" maxlength="10"
+                    onkeypress="return event.charCode>=48 && event.charCode<=57" id="phoneNumber"
+                    formControlName="phoneNumber" class="form-control">
+                <div class="text-danger"
+                    *ngIf="registrationForm.controls.phoneNumber.invalid && registrationForm.controls.phoneNumber.touched">
+                    Enter a valid 10-digit phone number. </div>
+            </div> -->
+
+            <div class="mb-3">
+                <label for="phoneNumber" class="form-label">Phone number:<span style="color: brown;">*</span></label>
+                <input type="tel" inputmode="numeric" maxlength="10" (keypress)="phone($event)" id="phoneNumber"
+                    formControlName="phoneNumber" class="form-control">
+                <div *ngIf="getControl('phoneNumber')?.errors && getControl('phoneNumber')?.touched">
+                    <small class="text-danger" *ngIf="getControl('phoneNumber')?.errors?.['required']">Phone number is
+                        required</small>
+                    <small class="text-danger" *ngIf="getControl('phoneNumber')?.errors">Invalid phone number.</small>
+                </div>
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Country:</label><br>
+                <mat-form-field>
+
+
+                    <mat-select formControlName="selectedcountry" placeholder="Select Country">
+                        <mat-option *ngFor="let country of countries" [value]="country.id">{{ country.value
+                            }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- <select name="country" id="country" formControlName="selectedcountry">
+                    <option value="" disabled selected hidden>--Select country--</option>
+                    <option *ngFor="let country of countries" [value]="country">{{country }}</option>
+                  </select> -->
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">State:</label><br>
+                <mat-form-field>
+
+
+                    <mat-select formControlName="selectedstate" placeholder="Select state">
+                        <mat-option *ngFor="let state of states" [value]="state.id">{{ state.value }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Gender</label>
+                <mat-radio-group formControlName="gender">
+                    <mat-radio-button value="male">Male</mat-radio-button>
+                    <mat-radio-button value="female">Female</mat-radio-button>
+                </mat-radio-group>
+
+            </div>
+    
+           
+
+
+            <div class="mb-3"> <label for="password" class="form-label">Password<span
+                style="color: brown;">*</span></label><br> 
+                
+                <input type="password" id="password" name="password" formControlName="password"
+            class="form-control">
+            <div *ngIf="getControl('password')?.errors && getControl('password')?.touched">
+                <small class="text-danger" *ngIf="getControl('password')?.errors?.['required']">Password is required</small>
+                <small class="text-danger" *ngIf ="getControl('password')?.errors">Password should have atleast one Uppercase, one lowercase,  one special character and a digit and should be 8 characters long</small>
+                </div>
+    </div>
+
+
+
+    <div class="mb-3"> <label for="confirmpassword" class="form-label">Confirm Password<span
+                style="color: brown;">*</span></label><br>
+        <input type="password" id="confirmpassword" name="confirmpassword" formControlName="confirmpassword" (keyup)="matchpassword()" class="form-control">
+        <div *ngIf="registrationForm.controls.confirmpassword.touched && registrationForm.controls.confirmpassword.invalid"
+            class="text-danger"> Password doesn't match. </div>
+
+    </div>
+            
+
+            
+            <p> Have an account<a [routerLink]="['/login']">Login </a> </p>
+            <button type="submit" class="btn btn-primary"
+                [disabled]="registrationForm.invalid || mismatch">Sign
+                Up</button>
+        </form>
+    </div>
+</div>
+<p> Form status : {{this.registrationForm.status}}</p>
+<p> Password mismatch : {{this.mismatch}}</p>
