@@ -8,16 +8,24 @@ import {NgIf} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { AddComponent } from './add/add.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EditComponent } from './edit/edit.component';
+import { ConfirmDialogueComponent } from './confirm-dialogue/confirm-dialogue.component';
 
 @NgModule({
   declarations: [
     CourseComponent,
-    AddComponent
+    AddComponent,
+    EditComponent,
+    ConfirmDialogueComponent
   ],
   imports: [
     CommonModule,
     AddcourseRoutingModule,
-    MatDialogModule
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    FormsModule
   
   ]
 })

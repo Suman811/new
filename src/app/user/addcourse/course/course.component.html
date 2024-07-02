@@ -17,15 +17,15 @@
     </tbody>
 </table> -->
 <div class = "d-flex justify-content-center">
-    <button type="submit"  class="btn btn-primary" mat-raised-button (click)="addcourse()" >Add Course</button>
+    <button type="submit"  class="btn btn-primary" mat-raised-button (click)="openDialog()" >Add Course</button>
 </div>
-<div class="d-flex justify-content-center  m-5 " style="height: 100vh;">
+<div class="d-flex justify-content-center  m-5 ">
 
     
     <table class="table table-hover table-striped table-bordered table-condensed">
         <thead>
             <tr>
-                <td>Id</td>
+               
                 <td>Course</td>
                 <td>Duration</td>
                 <td>Actions</td>
@@ -33,11 +33,11 @@
         </thead>
         <tbody>
             <tr *ngFor="let course of courses">
-                <td>{{course.id}}</td>
-                <td>{{course.title}}</td>
+                
+                <td>{{course.name}}</td>
                 <td>{{course.duration}}</td>
-                <td><button type="button" class="btn btn-primary" >Edit</button>
-                    <button  type="button" color="warn"class="btn btn-danger"> Delete</button>
+                <td><button type="button" class="btn btn-primary" routerLink="edit"  >Edit</button>
+                    <button  type="button" color="warn"class="btn btn-danger" routerLink="confirmdialog"> Delete</button>
                 </td>
             </tr>
         </tbody>
