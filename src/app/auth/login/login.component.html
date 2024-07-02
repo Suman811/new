@@ -23,6 +23,17 @@
         
       </div> 
 
+      <!-- <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="passwordVisible ? 'text' : 'password'" formControlName="password" placeholder="Enter your password">
+        <button mat-icon-button matSuffix (click)="passwordVisible = !passwordVisible">
+          <mat-icon>{{ passwordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="getControl('password')?.errors && getControl('password')?.touched">
+          Password should have at least one uppercase, one lowercase, one special character and a digit and should be 8 characters long
+        </mat-error>
+      </mat-form-field> -->
+
 
 
 

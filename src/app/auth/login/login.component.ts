@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent {
 hide=true;
-
+passwordVisible=false;
 
 
   constructor(private route: Router, private toastr : ToastrService) { }

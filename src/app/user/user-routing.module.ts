@@ -16,8 +16,17 @@ const routes: Routes = [
             (m) => m.DashboardModule
           ),
       },
+      {
+        path: 'addcourse', 
+        loadChildren:()=>
+          import('./addcourse/addcourse.module').then(
+           (m) => m.AddcourseModule
+          )
+      }
     ],
-  }
+  },
+
+
 ];
 
 @NgModule({
