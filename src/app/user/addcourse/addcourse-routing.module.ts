@@ -8,9 +8,9 @@ import { ConfirmDialogueComponent } from './confirm-dialogue/confirm-dialogue.co
 
 const routes: Routes = [
   {path:'', component:CourseComponent},
-  {path:'add', component:AddComponent},
-  {path:'edit', component:EditComponent},
-  {path:'confirmdialog',component:ConfirmDialogueComponent}
+  // {path:'add', component:AddComponent},
+  // {path:'edit', component:EditComponent},
+  // {path:'confirmdialog',component:ConfirmDialogueComponent}
 
 ];
 

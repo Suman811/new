@@ -11,6 +11,7 @@ import { AddComponent } from './add/add.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditComponent } from './edit/edit.component';
 import { ConfirmDialogueComponent } from './confirm-dialogue/confirm-dialogue.component';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -25,8 +26,15 @@ import { ConfirmDialogueComponent } from './confirm-dialogue/confirm-dialogue.co
     MatDialogModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    FormsModule
-  
+    FormsModule,
+    MatInputModule,
+    MatButtonModule
+
+  ],
+  providers:[
+    {provide:MatDialogRef , useValue:{} },
+ 
+    { provide: MAT_DIALOG_DATA, useValue: {} }
   ]
 })
 export class AddcourseModule { }

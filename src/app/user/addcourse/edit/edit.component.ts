@@ -1,66 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogueComponent } from '../confirm-dialogue/confirm-dialogue.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+//import { ToastrService } from 'ngx-toastr/toastr/toastr.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+  styleUrls: ['./edit.component.scss']
 })
-export class EditComponent implements OnInit {
-  courses: { name: string, duration: string }[] = [];
-  editingCourseIndex: number = -1;
-  editingCourse: { name: string, duration: string } = { name: '', duration: '' };
+export class EditComponent {
+  course: any = {};
 
-  constructor(private dialog: MatDialog) {}
-
-  ngOnInit() {
-    this.loadCoursesFromLocalStorage();
-  }
-
-  loadCoursesFromLocalStorage() {
-    const coursesData = localStorage.getItem('courses');
-    if (coursesData) {
-      this.courses = JSON.parse(coursesData);
+  constructor(
+    @Optional() public dialogRef: MatDialogRef<EditComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private toastr:ToastrService
+      ) 
+   
+    
+    {
+    this.course = { ...data.course }
     }
-  }
-
-  
-  deleteCourse(index: number) {
-    const dialogRef = this.dialog.open(ConfirmDialogueComponent, {
-      width: '250px',
-      data: { title: 'Confirm Deletion', message: 'Are you sure you want to delete this course?' }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.courses.splice(index, 1);
-        this.updateLocalStorage();
-      }
-    });
-  }
-
-  editCourse(index: number) {
-    this.editingCourseIndex = index;
-    this.editingCourse = { ...this.courses[index] };
-  }
 
   saveCourse() {
-    if (this.editingCourseIndex !== -1) {
-      this.courses[this.editingCourseIndex] = this.editingCourse;
-      this.updateLocalStorage();
-      this.cancelEdit();
-    }
+    this.dialogRef.close(this.course);
+    this.toastr.success("Edit Succesful");
   }
 
   cancelEdit() {
-    this.editingCourseIndex = -1;
-    this.editingCourse = { name: '', duration: '' };
-  }
-
-  updateLocalStorage() {
-    localStorage.setItem('courses', JSON.stringify(this.courses));
+    this.dialogRef.close();
   }
 
 }

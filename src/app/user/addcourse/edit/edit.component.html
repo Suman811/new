@@ -1,13 +1,15 @@
-<div>
-    <h3>Edit Course</h3>
-    <label>
-      Name:
-      <input [(ngModel)]="editingCourse.name" placeholder="Name">
-    </label>
-    <label>
-      Duration:
-      <input [(ngModel)]="editingCourse.duration" placeholder="Duration">
-    </label>
-    <button (click)="saveCourse()">Save</button>
-    <button (click)="cancelEdit()">Cancel</button>
-  </div>
+<h3 mat-dialog-title>Edit Course</h3>
+<div mat-dialog-content>
+      
+      <mat-form-field>
+        <input matInput [(ngModel)]="course.name" placeholder="Name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="course.duration" placeholder="Duration">
+      </mat-form-field>
+    
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="saveCourse()">Save</button>
+    <button mat-button (click)="cancelEdit()">Cancel</button>
+</div>
