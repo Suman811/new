@@ -37,7 +37,7 @@ export class CourseComponent {
     // this.loadCourses();
   }
 
-  addDialog(): void {
+  addCourseDialog(): void {
     const dialogRef = this.dialog.open(AddComponent, {
       width: '400px'
     });
