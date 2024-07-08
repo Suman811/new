@@ -1,0 +1,19 @@
+<!-- course-dialog.component.html -->
+<h1 mat-dialog-title>Add a new course</h1>
+<div mat-dialog-content>
+  <form [formGroup]="courseForm" class="my-3">
+    
+    <mat-form-field appearance="outline">
+        <mat-label>Course Name </mat-label>
+       <input matInput formControlName="name" >
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Course Duration</mat-label>
+      <input matInput formControlName="duration" >
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSave()" [disabled]="courseForm.invalid">Save</button>
+</div>
