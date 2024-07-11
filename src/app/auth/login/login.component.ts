@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { MyserviceService } from 'src/app/myservice.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,7 +13,7 @@ hide=true;
 passwordVisible=false;
 
 
-  constructor(private route: Router, private toastr : ToastrService) { }
+  constructor(private route: Router, private toastr : ToastrService, private service:MyserviceService) { }
 
 
   ngOninit() {
@@ -42,6 +43,7 @@ getControl(a:any){
   return this.loginform.get(a);
 }
   saveform() {
+    this.service.Validate(this.loginform.value);
     const a = this.loginform.value.email;
     const b = this.loginform.value.password;
 

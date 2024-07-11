@@ -105,8 +105,8 @@
             <div class="mb-3">
                 <label class="form-label">Gender</label>
                 <mat-radio-group formControlName="gender">
-                    <mat-radio-button value="male">Male</mat-radio-button>
-                    <mat-radio-button value="female">Female</mat-radio-button>
+                    <mat-radio-button [value]="false">Male</mat-radio-button>
+                    <mat-radio-button [value]="true">Female</mat-radio-button>
                 </mat-radio-group>
 
             </div>

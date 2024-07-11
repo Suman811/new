@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { MyserviceService } from 'src/app/myservice.service';
 
 @Component({
   selector: 'app-signup',
@@ -35,13 +36,13 @@ export class SignupComponent {
   }
 
 
-  constructor(private fb: FormBuilder,private toastr:ToastrService,private route:Router) { }
+  constructor(private fb: FormBuilder,private toastr:ToastrService,private route:Router , private signupservice:MyserviceService) { }
   registrationForm = this.fb.group({
     firstname: ['', Validators.required],
     lastname: ['', Validators.required],
     email: ['', [Validators.email, Validators.required]],
     phoneNumber: ['', Validators.required],
-    gender: [''],
+    gender: [1,Validators.required],
     selectedcountry: ['', Validators.required],
     selectedstate: ['', Validators.required],
     password: ['', [Validators.required, Validators.pattern(('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}'))]],
@@ -87,6 +88,14 @@ export class SignupComponent {
   saveForm() {
 
     if (this.registrationForm.valid) {
+       debugger;
+    this.signupservice.addUser(this.registrationForm.value).subscribe(m=>{
+      if (m){
+        console.log("Successfully added to database")
+      }
+    });
+
+
       let p = this.registrationForm.value.email || '';
       let q = this.registrationForm.value.password || '';
       console.log(this.registrationForm.value);
