@@ -1,6 +1,9 @@
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <div class="col-12 col-md-8 col-lg-6">
-        <form [formGroup]="registrationForm" (submit)="saveForm()" class="p-4 border rounded bg-light">
+        <div *ngIf="loading">
+            Loading...
+          </div>
+        <form [formGroup]="registrationForm" (submit)="saveForm()" *ngIf="!loading" class="p-4 border rounded bg-light">
             <h2 class="mb-4 mt-2">Signup Form </h2>
             <p style="color: brown;"> * (asterisk) represents mandatory field</p>
 

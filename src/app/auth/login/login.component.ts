@@ -9,11 +9,16 @@ import { MyserviceService } from 'src/app/myservice.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-hide=true;
-passwordVisible=false;
+  hide = true;
+  passwordVisible = false;
 
 
-  constructor(private route: Router, private toastr : ToastrService, private service:MyserviceService) { }
+  constructor(
+    private router: Router,
+    private toastr: ToastrService,
+    private service: MyserviceService,
+
+  ) { }
 
 
   ngOninit() {
@@ -39,26 +44,26 @@ passwordVisible=false;
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
-getControl(a:any){
-  return this.loginform.get(a);
-}
+  getControl(a: any) {
+    return this.loginform.get(a);
+  }
   saveform() {
-    this.service.Validate(this.loginform.value);
-    const a = this.loginform.value.email;
-    const b = this.loginform.value.password;
+    if (this.loginform.valid) {
+      this.service.Validate(this.loginform.value).subscribe(res => {
+        if (res.statusCode == 200) {
+          localStorage.setItem('mytoken', 'token');
+          this.router.navigate(['/user'])
+          this.toastr.success(res.StatusCode, "login Succesful");
+        }
+        else {
+          this.toastr.error(res.StatusCode);
 
-    const storedEmail = localStorage.getItem('email') || '';
-    const storedPassword = localStorage.getItem('password') || '';
-
-    console.log(this.loginform.value);
-    if (a == storedEmail && b == storedPassword) {
-      alert("Login successful");
-      localStorage.setItem("mytoken", "token");
-      this.route.navigate(['/user']);
-      this.toastr.success("login Succesful","Congratulations");
+        }
+      });
     }
     else {
-      alert("Incorrect username or password");
+      this.toastr.error("Invalid Form");
+
     }
   }
 

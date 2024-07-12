@@ -4,6 +4,9 @@ import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MyserviceService } from 'src/app/myservice.service';
+import { LoaderComponent } from 'src/app/loader/loader.component';
+import { ServiceloaderService } from 'src/app/loader/serviceloader.service';
+
 
 @Component({
   selector: 'app-signup',
@@ -13,15 +16,15 @@ import { MyserviceService } from 'src/app/myservice.service';
 
 })
 export class SignupComponent {
- 
- 
- arr : any[] = [];
- 
- 
+
+
+  arr: any[] = [];
+
+
   hide = true;
   hide1 = true;
 
-  
+
   matchpassword() {
 
     const a = this.registrationForm.value.password;
@@ -36,13 +39,19 @@ export class SignupComponent {
   }
 
 
-  constructor(private fb: FormBuilder,private toastr:ToastrService,private route:Router , private signupservice:MyserviceService) { }
+  constructor(
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    private route: Router,
+    private signupservice: MyserviceService,
+    private loaderService: ServiceloaderService
+  ) { }
   registrationForm = this.fb.group({
     firstname: ['', Validators.required],
     lastname: ['', Validators.required],
     email: ['', [Validators.email, Validators.required]],
     phoneNumber: ['', Validators.required],
-    gender: [1,Validators.required],
+    gender: [1, Validators.required],
     selectedcountry: ['', Validators.required],
     selectedstate: ['', Validators.required],
     password: ['', [Validators.required, Validators.pattern(('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}'))]],
@@ -60,7 +69,7 @@ export class SignupComponent {
   //   confirmpassword: new FormControl(" ", [Validators.required, Validators.pattern(('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}'))])
   // })
   mismatch: boolean = false;
-
+  loading: boolean = false;
   countries = [
     { id: 1, value: "India" },
     { id: 2, value: "USA" },
@@ -86,16 +95,18 @@ export class SignupComponent {
   }
 
   saveForm() {
-
+    this.loaderService.showLoader();
     if (this.registrationForm.valid) {
-       debugger;
-    this.signupservice.addUser(this.registrationForm.value).subscribe(m=>{
-      if (m){
-        console.log("Successfully added to database")
-      }
-    });
-
-
+      //debugger;
+      this.signupservice.addUser(this.registrationForm.value).subscribe(m => {
+        if (m.StatusCode = 200) {
+          console.log(m);
+        }
+        this.loaderService.hideLoader();
+        this.toastr.success(m.StatusCode, 'Signup success');
+      });
+      
+      
       let p = this.registrationForm.value.email || '';
       let q = this.registrationForm.value.password || '';
       console.log(this.registrationForm.value);
@@ -103,7 +114,6 @@ export class SignupComponent {
       localStorage.setItem('password', q);
       this.arr.push(this.registrationForm.value);
       localStorage.setItem('formdata', JSON.stringify(this.arr));
-      this.toastr.success("Signup Succesful","Congratulations");
       this.route.navigate(['/login']);
     }
     else {
